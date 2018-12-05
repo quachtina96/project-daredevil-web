@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<!-- saved from url=(0060)https://www.chartjs.org/samples/latest/scales/time/line.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Line Chart</title>
+	<script async="" src="./Line Chart_files/analytics.js"></script><script src="./Line Chart_files/moment.min.js"></script>
+	<script src="./Line Chart_files/Chart.js"></script><style type="text/css">/* Chart.js */
+@-webkit-keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}@keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}.chartjs-render-monitor{-webkit-animation:chartjs-render-animation 0.001s;animation:chartjs-render-animation 0.001s;}</style>
+	<script src="./Line Chart_files/utils.js"></script>
+
+	<!-- include react js  -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react-dom.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.21.1/babel.min.js"></script>
+
+	<!-- code using react depends on babel -->
+	<script src="index.js" type="text/babel"></script>
+	<script src="server.js"></script>
+	<style>
+		h1,h2,h3,h4,h5,p {
+			font-family: "Arial", sans-serif;
+		}
+
+		canvas {
+			-moz-user-select: none;
+			-webkit-user-select: none;
+			-ms-user-select: none;
+		}
+
+		.motor_panel {
+			display:inline-block;
+			margin: 10px;
+			background-color: #EFF1FF;
+			width: 20%;
+		}
+		#canvas {
+			display: block;
+			height: 474px;
+			width: 948px;
+			float: left;
+		}
+
+		#plot_panel {
+			width: 75%;
+			margin: 10px;
+			float: right;
+		}
+
+		.chartjs-size-monitor {
+			position: absolute;
+			left: 0px;
+			top: 0px;
+			right: 0px;
+			bottom: 0px;
+			overflow: hidden;
+			pointer-events: none;
+			visibility: hidden;
+			z-index: -1;
+		}
+
+		.chartjs-size-monitor-expand {
+			position:absolute;
+			left:0;
+			top:0;
+			right:0;
+			bottom:0;
+			overflow:hidden;
+			pointer-events:none;
+			visibility:hidden;
+			z-index:-1;
+		}
+
+		.chartjs-size-monitor-shrink {
+			position:absolute;
+			left:0;
+			top:0;
+			right:0;
+			bottom:0;
+			overflow:hidden;
+			pointer-events:none;
+			visibility:hidden;
+			z-index:-1;
+		}
+
+		#expand_subdiv {
+			position:absolute;
+			width:1000000px;
+			height:1000000px;
+			left:0;
+			top:0;
+		}
+
+		#shrink_subdiv {
+			position:absolute;
+			width:200%;
+			height:200%;
+			left:0;
+			top:0;
+		}
+
+		#buttons {
+			width: 100%;
+			display: block;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="motor_stuff">
+	  <div class="motor_panel">
+	    <h3>Motor: Left-Top</h3>
+	    <h4>Controls</h4>
+	    <p>direction: clockwise, counterclockwise</p>
+	    <p>brake: on,off</p>
+	    <h4>Monitor</h4>
+	    <p>power: Unknown</p>
+	    <p>current draw: Unknown</p>
+	  </div>
+	  <div class="motor_panel">
+	    <h3>Motor: Left-Bottom</h3>
+	    <h4>Controls</h4>
+	    <p>direction: clockwise, counterclockwise</p>
+	    <p>brake: on,off</p>
+	    <h4>Monitor</h4>
+	    <p>power: Unknown</p>
+	    <p>current draw: Unknown</p>
+	  </div>
+	  <div class="motor_panel">
+	    <h3>Motor: Right-Top</h3>
+	    <h4>Controls</h4>
+	    <p>direction: clockwise, counterclockwise</p>
+	    <p>brake: on,off</p>
+	    <h4>Monitor</h4>
+	    <p>power: Unknown</p>
+	    <p>current draw: Unknown</p>
+	  </div>
+	  <div class="motor_panel">
+	    <h3>Motor: Right-Bottom</h3>
+	    <h4>Controls</h4>
+	    <p>direction: clockwise, counterclockwise</p>
+	    <p>brake: on,off</p>
+	    <h4>Monitor</h4>
+	    <p>power: Unknown</p>
+	    <p>current draw: Unknown</p>
+	  </div>
+	</div>
+
+	<div id="plot_panel">
+		<div class="chartjs-size-monitor">
+			<div class="chartjs-size-monitor-expand">
+				<div id="expand_subdiv"></div>
+			</div>
+			<div class="chartjs-size-monitor-shrink">
+				<div id="shrink_subdiv"></div>
+			</div>
+		</div>
+		<canvas id="canvas" width="1896" height="948" class="chartjs-render-monitor"></canvas>
+	</div>
+
+	<br>
+	<br>
+
+	<div id="buttons">
+<!-- 		<button id="randomizeData">Randomize Data</button>
+		<button id="addDataset">Add Dataset</button>
+		<button id="removeDataset">Remove Dataset</button> -->
+		<button id="addData">Add Data</button>
+<!-- 		<button id="removeData">Remove Data</button> -->
+	</div>
+	</div>
+	<script>
+	</script>
+
+
+
+</body></html>
