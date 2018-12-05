@@ -33,9 +33,23 @@ var config = {
     labels: [ // Date Objects
     ],
     datasets: [{
-      label: 'Measured',
+      label: 'Measured X',
       backgroundColor: color(window.chartColors.green).alpha(0.5).rgbString(),
       borderColor: window.chartColors.green,
+      fill: false,
+      data: [],
+    },
+    {
+      label: 'Measured Y',
+      backgroundColor: color(window.chartColors.blue).alpha(0.5).rgbString(),
+      borderColor: window.chartColors.blue,
+      fill: false,
+      data: [],
+    },
+    {
+      label: 'Measured Z',
+      backgroundColor: color(window.chartColors.purple).alpha(0.5).rgbString(),
+      borderColor: window.chartColors.purple,
       fill: false,
       data: [],
     }]
@@ -120,6 +134,7 @@ function addData(xyzData) {
   }
   // Add measured acceleration data
   for (var axis in map) {
+    console.log(axis)
     var acceleration = config.data.datasets[map[axis]].data
     acceleration.push({
       x: date,
@@ -151,7 +166,13 @@ window.onload = function() {
   window.myLine = new Chart(ctx, config);
 
 };
-document.getElementById('addData').addEventListener('click', addData);
+document.getElementById('addData').addEventListener('click', () => {
+  addData({
+    'x':randomScalingFactor(),
+    'y':randomScalingFactor(),
+    'z':randomScalingFactor()
+  });
+});
 document.onkeydown = function(evt) {
   evt = evt || window.event;
   switch(evt.code) {
