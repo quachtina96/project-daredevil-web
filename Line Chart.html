@@ -2,19 +2,15 @@
 <!-- saved from url=(0060)https://www.chartjs.org/samples/latest/scales/time/line.html -->
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Line Chart</title>
-	<script async="" src="./Line Chart_files/analytics.js"></script><script src="./Line Chart_files/moment.min.js"></script>
-	<script src="./Line Chart_files/Chart.js"></script><style type="text/css">/* Chart.js */
-@-webkit-keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}@keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}.chartjs-render-monitor{-webkit-animation:chartjs-render-animation 0.001s;animation:chartjs-render-animation 0.001s;}</style>
-	<script src="./Line Chart_files/utils.js"></script>
-
-	<!-- include react js  -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react-dom.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.21.1/babel.min.js"></script>
+<!-- 	<script async="" src="./Line Chart_files/analytics.js"></script><script src="./Line Chart_files/moment.min.js"></script>
+	<script src="./Line Chart_files/Chart.js"></script> -->
+<!-- 	<script src="./Line Chart_files/utils.js"></script> -->
 
 	<!-- code using react depends on babel -->
 	<script src="index.js" type="text/babel"></script>
-	<script src="server.js"></script>
+	<style type="text/css">/* Chart.js */
+	@-webkit-keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}@keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}.chartjs-render-monitor{-webkit-animation:chartjs-render-animation 0.001s;animation:chartjs-render-animation 0.001s;}
+	</style>
 	<style>
 		h1,h2,h3,h4,h5,p {
 			font-family: "Arial", sans-serif;
@@ -109,8 +105,8 @@
 	  <div class="motor_panel">
 	    <h3>Motor: Left-Top</h3>
 	    <h4>Controls</h4>
-	    <p>direction: clockwise, counterclockwise</p>
-	    <p>brake: on,off</p>
+	    <button class="direction_button">direction: clockwise, counterclockwise</button>
+	    <button class="brake_button">brake: on,off</button>
 	    <h4>Monitor</h4>
 	    <p>power: Unknown</p>
 	    <p>current draw: Unknown</p>
@@ -118,8 +114,8 @@
 	  <div class="motor_panel">
 	    <h3>Motor: Left-Bottom</h3>
 	    <h4>Controls</h4>
-	    <p>direction: clockwise, counterclockwise</p>
-	    <p>brake: on,off</p>
+	    <button class="direction_button">direction: clockwise, counterclockwise</button>
+	    <button class="brake_button">brake: on,off</button>
 	    <h4>Monitor</h4>
 	    <p>power: Unknown</p>
 	    <p>current draw: Unknown</p>
@@ -127,8 +123,8 @@
 	  <div class="motor_panel">
 	    <h3>Motor: Right-Top</h3>
 	    <h4>Controls</h4>
-	    <p>direction: clockwise, counterclockwise</p>
-	    <p>brake: on,off</p>
+	    <button class="direction_button">direction: clockwise, counterclockwise</button>
+	    <button class="brake_button">brake: on,off</button>
 	    <h4>Monitor</h4>
 	    <p>power: Unknown</p>
 	    <p>current draw: Unknown</p>
@@ -136,8 +132,8 @@
 	  <div class="motor_panel">
 	    <h3>Motor: Right-Bottom</h3>
 	    <h4>Controls</h4>
-	    <p>direction: clockwise, counterclockwise</p>
-	    <p>brake: on,off</p>
+	    <button class="direction_button">direction: clockwise, counterclockwise</button>
+	    <button class="brake_button">brake: on,off</button>
 	    <h4>Monitor</h4>
 	    <p>power: Unknown</p>
 	    <p>current draw: Unknown</p>

@@ -1,3 +1,5 @@
+const channel = require("phoenix-channels");
+
 /**
  * @fileoverview This file defines the helmet controller.
  */

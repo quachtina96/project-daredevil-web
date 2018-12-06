@@ -1,3 +1,7 @@
+var React = require('react');
+var moment = require('moment');
+var Chart = require('chart.js');
+
 // TODO: automatically log information received from python over serial and
 // give user ability to stop communication.
 class Recorder {
@@ -208,33 +212,40 @@ document.onkeydown = function(evt) {
 //   }
 // }
 
-class MotorPanel extends React.Component {
-  render() {
-    const {
-      className,
-      img: mainImg,
-      title: mainTitle,
-      moreButtons,
-      tooltipPlace,
-      onClick
-    } = this.props;
+// // todo: verify this.[ros]
+// class MotorPanel extends React.Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       direction: 'clockwise',
+//       brake_status: 'On',
+//       power: 12,
+//       current_draw: 12
+//     };
+//   }
 
-    return (
-      <div class="motor_panel">
-      location:
-      direction:
-      brake state:
-      power:
-      current draw:
-      </div>
-    );
-  }
-}
+//   render() {
+//     return (
+//     <div class="motor_panel">
+//       <h3>Motor: Left-Top</h3>
+//       <h4>Controls</h4>
+//       <button onClick="toggleDirection()"> direction: {this.props.direction}</button>
+//       <button>brake: {this.props.brake_status}</button>
+//       <h4>Monitor</h4>
+//       <p>power: {this.props.power}</p>
+//       <p>current draw: {this.props.curent_draw}</p>
+//     </div>
+//     );
+//   }
 
-class PlotManager extends React.Component {
+//   toggleDirection() {
+//   }
+// }
 
-}
+// class PlotManager extends React.Component {
 
-class LiveMonitor extends React.Component {
+// }
 
-}
+// class LiveMonitor extends React.Component {
+
+// }
