@@ -5,9 +5,9 @@
     "version": "0.0.1",
     "main": "index.js",
     "scripts": {
-      "test": "tap test/",
-	    "build": "webpack --watch --progress",
-	    "start": "webpack-dev-server"
+        "test": "tap test/",
+        "build": "webpack --watch --progress",
+        "start": "webpack-dev-server"
     },
     "repository": {
         "type": "git",
