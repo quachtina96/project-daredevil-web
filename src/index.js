@@ -170,14 +170,49 @@ window.onload = function() {
   var ctx = document.getElementById('canvas').getContext('2d');
   window.myLine = new Chart(ctx, config);
 
-};
-document.getElementById('addData').addEventListener('click', () => {
-  addData({
-    'x':randomScalingFactor(),
-    'y':randomScalingFactor(),
-    'z':randomScalingFactor()
+  document.getElementById('addData').addEventListener('click', () => {
+    addData({
+      'x':randomScalingFactor(),
+      'y':randomScalingFactor(),
+      'z':randomScalingFactor()
+    });
   });
-});
+
+  document.onkeydown = function(evt) {
+    evt = evt || window.event;
+    switch(evt.code) {
+      case 'KeyL':
+        console.log('sending left state');
+        channel.push("left", {body: JSON.stringify(state)})
+        break;
+      case 'KeyRight':
+        console.log('sending right state');
+        channel.push("right", {body: JSON.stringify(state)})
+      case 'ArrowLeft':
+        console.log('left');
+        break;
+      case 'ArrowRight':
+        console.log('right');
+        break;
+      case 'ArrowUp':
+        console.log('up');
+        break;
+      case 'ArrowDown':
+        console.log('down');
+        break;
+      case 'Space':
+        // toggle recording
+        if (recording) {
+          recorder.stop();
+        } else {
+          recorder.start();
+        }
+        recording = !recording;
+      default:
+        break;
+    }
+  };
+};
 
 let socket = new Socket("ws://dlevs.me:4000/socket")
 
@@ -190,7 +225,7 @@ channel.join()
   .receive("error", resp => { console.log("Unable to join", resp) })
 
 // right or left state
-state = {
+var state = {
   'top': {
     'speed': 300,
     'stop': true,
@@ -200,42 +235,6 @@ state = {
     'stop': false,
   }
 };
-
-document.onkeydown = function(evt) {
-  evt = evt || window.event;
-  switch(evt.code) {
-    case 'KeyL':
-      console.log('sending left state');
-      channel.push("left", {body: JSON.stringify(state)})
-      break;
-    case 'KeyRight':
-      console.log('sending right state');
-      channel.push("right", {body: JSON.stringify(state)})
-    case 'ArrowLeft':
-      console.log('left');
-      break;
-    case 'ArrowRight':
-      console.log('right');
-      break;
-    case 'ArrowUp':
-      console.log('up');
-      break;
-    case 'ArrowDown':
-      console.log('down');
-      break;
-    case 'Space':
-      // toggle recording
-      if (recording) {
-        recorder.stop();
-      } else {
-        recorder.start();
-      }
-      recording = !recording;
-    default:
-      break;
-  }
-};
-
 
 //////// REACT.JS STUFF
 // class AccelerationPlot extends React.Component {
