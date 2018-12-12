@@ -1,30 +1,43 @@
-const channel = require("phoenix-channels");
+
+// right or left state
+state = {
+	'top': {
+		'speed': 300,
+		'stop': true,
+	},
+	'bottom': {
+		'speed': 300,
+		'stop': false,
+	}
+};
 
 /**
  * @fileoverview This file defines the helmet controller.
  */
 class Helmet {
 	constructor {
-		this.serial = new Serial();
-		this.actions = {
-			'left':
+		// Current state of the helmet
+		this.state = {
+			'left': {
+				'top': {
+					'speed': 0,
+					'stop': false,
+				},
+				'bottom': {
+					'speed': 0,
+					'stop': false,
+				},
+			},
+			'right': {
+				'top': {
+					'speed': 0,
+					'stop': false,
+				},
+				'bottom': {
+					'speed': 0,
+					'stop': false,
+				}
+			}
 		}
-	}
-
-	move(type) {
-		this.execute(this.actions[actionType]);
-	}
-
-	execute(actionType) {
-		for (var movement of this.actions[actionType]) {
-			this.serial.send(movement);
-		}
-
-	}
-}
-
-class Serial {
-	send(movement) {
-		console.log('send movement')
 	}
 }

@@ -1,6 +1,7 @@
 var React = require('react');
 var moment = require('moment');
 var Chart = require('chart.js');
+const { Socket } = require('phoenix-channels');
 
 // TODO: automatically log information received from python over serial and
 // give user ability to stop communication.
@@ -177,20 +178,50 @@ document.getElementById('addData').addEventListener('click', () => {
     'z':randomScalingFactor()
   });
 });
+
+let socket = new Socket("ws://dlevs.me:4000/socket")
+
+socket.connect()
+
+// Now that you are connected, you can join channels with a topic:
+let channel = socket.channel("room:lobby", {})
+channel.join()
+  .receive("ok", resp => { console.log("Joined successfully", resp) })
+  .receive("error", resp => { console.log("Unable to join", resp) })
+
+// right or left state
+state = {
+  'top': {
+    'speed': 300,
+    'stop': true,
+  },
+  'bottom': {
+    'speed': 300,
+    'stop': false,
+  }
+};
+
 document.onkeydown = function(evt) {
   evt = evt || window.event;
   switch(evt.code) {
+    case 'KeyL':
+      console.log('sending left state');
+      channel.push("left", {body: JSON.stringify(state)})
+      break;
+    case 'KeyRight':
+      console.log('sending right state');
+      channel.push("right", {body: JSON.stringify(state)})
     case 'ArrowLeft':
-    console.log('left');
+      console.log('left');
       break;
     case 'ArrowRight':
-    console.log('right');
+      console.log('right');
       break;
     case 'ArrowUp':
-    console.log('up');
+      console.log('up');
       break;
     case 'ArrowDown':
-    console.log('down');
+      console.log('down');
       break;
     case 'Space':
       // toggle recording
@@ -205,6 +236,7 @@ document.onkeydown = function(evt) {
   }
 };
 
+
 //////// REACT.JS STUFF
 // class AccelerationPlot extends React.Component {
 //   render() {
@@ -212,26 +244,33 @@ document.onkeydown = function(evt) {
 //   }
 // }
 
+// // todo: verify this.[ros]
 // class MotorPanel extends React.Component {
-//   render() {
-//     const {
-//       className,
-//       img: mainImg,
-//       title: mainTitle,
-//       moreButtons,
-//       tooltipPlace,
-//       onClick
-//     } = this.props;
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       direction: 'clockwise',
+//       brake_status: 'On',
+//       power: 12,
+//       current_draw: 12
+//     };
+//   }
 
+//   render() {
 //     return (
-//       <div class="motor_panel">
-//       location:
-//       direction:
-//       brake state:
-//       power:
-//       current draw:
-//       </div>
+//     <div class="motor_panel">
+//       <h3>Motor: Left-Top</h3>
+//       <h4>Controls</h4>
+//       <button onClick="toggleDirection()"> direction: {this.props.direction}</button>
+//       <button>brake: {this.props.brake_status}</button>
+//       <h4>Monitor</h4>
+//       <p>power: {this.props.power}</p>
+//       <p>current draw: {this.props.curent_draw}</p>
+//     </div>
 //     );
+//   }
+
+//   toggleDirection() {
 //   }
 // }
 

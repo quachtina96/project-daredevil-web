@@ -1,28 +1,17 @@
-var ws = new WebSocket("ws://localhost:8765");
+var express = require("express");
+var path = require('path');
 
-ws.onopen = function () {
-  ws.send("This is the browser!");
-};
+var app = express();
 
-ws.onmessage = function (e) {
-  console.log('recieved message from server.py:');
-  console.log(e)
-  console.log('end message');
+var server = app.listen(8081, function(){
+    var port = server.address().port;
+    console.log("Server started at http://localhost:%s", port);
+});
 
-	// Parse data, which should take the following form:
-	// {
-	//      'x': xvalue,
-	//      'y': yvalue,
-	//      'z': zvalue,
-	//  });
-  let readings = JSON.parse(e.data);
-  addData();
+app.use(express.static('Line Chart_files/'))
+app.use(express.static('index.js'))
 
-  // validate readings
-  if (readings.length != 16) {
-    console.log("Strange reading...", readings);
-    return;
-  }
-};
-
-console.log(ws);
+// requests will never reach this route
+app.get('/', function (req, res) {
+  res.sendFile(path.join(__dirname + '/Line Chart.html'));
+});
