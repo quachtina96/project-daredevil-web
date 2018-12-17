@@ -63,6 +63,28 @@ class Helmet {
 		this.sendState(side);
 	}
 
+	setDirection(id, direction) {
+		var label = id.split('-');
+	    var side = label[0];
+	    var topbottom = label[1];
+	    if (direction === "clockwise" || direction === "counterclockwise" ) {
+	    	this.state[side][topbottom].direction = direction;
+	    }
+	    this.sendState(side);
+	    return this.state[side][topbottom].direction;
+	}
+
+	setBrake(id, brakeStatus) {
+		var label = id.split('-');
+	    var side = label[0];
+	    var topbottom = label[1];
+	    if (typeof brakeStatus === "boolean") {
+	    	this.state[side][topbottom].stop = brakeStatus;
+	    }
+	    this.sendState(side);
+	    return this.state[side][topbottom].brakeStatus;
+	}
+
 	toggleDirection(id) {
 	    var label = id.split('-');
 	    var side = label[0];
@@ -102,6 +124,36 @@ class Helmet {
 
 	    this.sendState(side);
 	    return this.state[side][topbottom].speed;
+	}
+
+	lookUp(document) {
+		var percentSpeed = 20;
+		this.setSpeed('top-left', percentSpeed)
+		this.setSpeed('top-right', percentSpeed)
+		this.setDirection('top-left', 'counterclockwise')
+     	this.setDirection('top-right', 'clockwise')
+     	this.sendState('left');
+     	this.sendState('right');
+
+     	// Update GUI
+     	document.get
+	}
+
+	lookDown(document) {
+		var percentSpeed = 20;
+		this.setSpeed('top-left', percentSpeed)
+		this.setSpeed('top-right', percentSpeed)
+		this.setDirection('top-left', 'clockwise')
+		this.setDirection('top-right', 'counterclockwise')
+     	this.sendState('left');
+     	this.sendState('right');
+
+     	// Update GUI
+	}
+
+	_updateGUI() {
+  		var speedInputs = [...document.getElementsByClassName('speed_input')];
+  		var directionButtons = [...document.getElementsByClassName('direction_button')];
 	}
 }
 

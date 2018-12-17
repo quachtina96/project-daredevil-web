@@ -250,6 +250,11 @@ window.onload = function() {
       });
   });
 
+  // TODO: enable brake buttons when stopping mechanism works
+  brakeButtons.forEach(function(elem) {
+    elem.disabled = true;
+  });
+
   // HELMET CONTROLS
 
   // Explaining the url
@@ -274,6 +279,16 @@ window.onload = function() {
      console.log('heartbeat');
    }, 20000);
 
+  var handleHelmetCommand = function(el) {
+    // Set directions
+    if (this.id === 'look_up') {
+      helmet.lookUp(document);
+      updateHelmetStatus(helmet);
+    } else if (this.id == 'look_down') {
+      helmet.lookDown(document);
+      updateHelmetStatus(helmet);
+    }
+  }
 
   // ACCELERATION DATA VISUALIZATION
   var ws = new WebSocket("ws://localhost:8765");
