@@ -1,6 +1,8 @@
 # project-daredevil-web
 web interface for project daredevil to visualize acceleration measurements and control motors on the helmet.
 
+![Preview the Interface](interface_preview.jpg)
+
 Currently not hosted anywhere, but can be run locally.
 
 1. `git clone https://github.com/quachtina96/project-daredevil-web.git`
