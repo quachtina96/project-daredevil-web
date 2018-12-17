@@ -213,11 +213,14 @@ window.onload = function() {
       elem.addEventListener("keydown", function() {
         if (event.key === 'Enter') {
           if (parseFloat(elem.value)) {
-            helmet.setSpeed(elem.id, parseFloat(elem.value))
+            var newSpeed = helmet.setSpeed(elem.id, parseFloat(elem.value));
+            elem.value = newSpeed;
             console.log('set speed for' + elem.id);
           } else {
             console.log('could not speed for' + elem.id);
+            elem.value = '0';
           }
+          elem.blur()
         }
       });
   });

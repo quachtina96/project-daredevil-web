@@ -87,11 +87,17 @@ class Helmet {
 	    var side = label[0]
 	    var topbottom = label[1];
 
-	    // TODO: map given speed to possible range
+	    // keep speed to possible range (1-100)
+	    if (speed < 0) {
+	    	this.state[side][topbottom].speed = 0;
+	    } else if (speed > 100) {
+	    	this.state[side][topbottom].speed = 100;
+	    } else {
+	    	this.state[side][topbottom].speed = speed;
+	    }
 
-	    // set appropriate speed
-	    this.state[side][topbottom].speed = speed
 	    this.sendState(side);
+	    return this.state[side][topbottom].speed;
 	}
 }
 
