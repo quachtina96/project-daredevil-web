@@ -49,7 +49,7 @@ class Helmet {
 	}
 
 	sendState(side) {
-		channel.push(side, {body: JSON.stringify(this.state.side)});
+		this.channel.push(side, {body: JSON.stringify(this.state.side)});
 	}
 
 	// Stop the entire helmet from moving
@@ -60,23 +60,37 @@ class Helmet {
 	}
 
 	toggleDirection(id) {
-	    label = id.split('-');
-	    side = label[0];
-	    topbottom = label[1];
-	    currentDirection = this.state[side][topbottom].direction;
+	    var label = id.split('-');
+	    var side = label[0];
+	    var topbottom = label[1];
+	    var currentDirection = this.state[side][topbottom].direction;
 	    if (currentDirection == "clockwise") {
-	    	this.state[side][topbottom] = "counterclockwise";
+	    	this.state[side][topbottom].direction = "counterclockwise";
 	    } else {
-	    	this.state[side][topbottom] = "clockwise";
+	    	this.state[side][topbottom].direction = "clockwise";
 	    }
 	    this.sendState(side);
+	    return this.state[side][topbottom].direction;
 	}
 
 	toggleBrake(id) {
-	    label = id.split('-');
-	    side = label[0]
-	    topbottom = label[1];
+	    var label = id.split('-');
+	    var side = label[0]
+	    var topbottom = label[1];
 	    this.state[side][topbottom].stop = !this.state[side][topbottom].stop;
+	    this.sendState(side);
+	    return this.state[side][topbottom].stop;
+	}
+
+	setSpeed(id,speed) {
+		var label = id.split('-');
+	    var side = label[0]
+	    var topbottom = label[1];
+
+	    // TODO: map given speed to possible range
+
+	    // set appropriate speed
+	    this.state[side][topbottom].speed = speed
 	    this.sendState(side);
 	}
 }

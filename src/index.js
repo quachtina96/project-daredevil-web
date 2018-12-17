@@ -173,14 +173,6 @@ window.onload = function() {
   var ctx = document.getElementById('canvas').getContext('2d');
   window.myLine = new Chart(ctx, config);
 
-  document.getElementById('addData').addEventListener('click', () => {
-    addData({
-      'x':randomScalingFactor(),
-      'y':randomScalingFactor(),
-      'z':randomScalingFactor()
-    });
-  });
-
   document.onkeydown = function(evt) {
     evt = evt || window.event;
     switch(evt.code) {
@@ -216,13 +208,33 @@ window.onload = function() {
     }
   };
 
+  var speedInputs = [...document.getElementsByClassName('speed_input')];
+  speedInputs.forEach(function(elem) {
+      elem.addEventListener("keydown", function() {
+        if (event.key === 'Enter') {
+          if (parseFloat(elem.value)) {
+            helmet.setSpeed(elem.id, parseFloat(elem.value))
+            console.log('set speed for' + elem.id);
+          } else {
+            console.log('could not speed for' + elem.id);
+          }
+        }
+      });
+  });
+
   var directionButtons = [...document.getElementsByClassName('direction_button')];
   directionButtons.forEach(function(elem) {
       elem.addEventListener("click", function() {
+        var messageMap = {
+          'clockwise': 'Rotate Counterclockwise',
+          'counterclockwise': 'Rotate Clockwise'
+        };
+
         console.log('toggle motor direction for ' + elem.id);
         // Update view
         // Change data
-        helmet.toggleDirection(elem.id)
+        var newDirection = helmet.toggleDirection(elem.id)
+        elem.textContent = messageMap[newDirection];
       });
   });
 
@@ -230,7 +242,8 @@ window.onload = function() {
   brakeButtons.forEach(function(elem) {
       elem.addEventListener("click", function() {
         console.log('toggle brake on for ' + elem.id);
-        helmet.toggleBrake(elem.id)
+        var newBrakeStatus = helmet.toggleBrake(elem.id)
+        elem.textContent = newBrakeStatus ? 'Turn Off Brake' : 'Turn On Brake';
       });
   });
 
