@@ -1,10 +1,9 @@
 var React = require('react');
 var moment = require('moment');
 var Chart = require('chart.js');
+var Helmet = require('./helmet.js');
 const { Socket } = require('phoenix-channels');
 
-// TODO: automatically log information received from python over serial and
-// give user ability to stop communication.
 class Recorder {
   constructor () {
     this.startTime = null;
@@ -130,6 +129,11 @@ function addRandomData() {
   window.myLine.update();
 }
 
+/**
+ * Add data to the plot.
+ * @param {!Object} xyzData - a dictionary mapping x y and z axes to their
+ * string values of their accelerations
+ */
 function addData(xyzData) {
   var date = moment().toDate();
   var map = {
@@ -139,11 +143,11 @@ function addData(xyzData) {
   }
   // Add measured acceleration data
   for (var axis in map) {
-    console.log(axis)
     var acceleration = config.data.datasets[map[axis]].data
     acceleration.push({
       x: date,
-      y: xyzData[axis],
+      // convert data from string to float
+      y: parseFloat(xyzData[axis]),
     });
   }
   window.myLine.update();
@@ -163,7 +167,6 @@ function removeData() {
 
   window.myLine.update();
 };
-
 
 // Add event listeners.
 window.onload = function() {
@@ -212,26 +215,52 @@ window.onload = function() {
         break;
     }
   };
+
+  var directionButtons = [...document.getElementsByClassName('direction_button')];
+  directionButtons.forEach(function(elem) {
+      elem.addEventListener("click", function() {
+        console.log('toggle motor direction for ' + elem.id);
+        // Update view
+        // Change data
+        helmet.toggleDirection(elem.id)
+      });
+  });
+
+  var brakeButtons = [...document.getElementsByClassName('brake_button')];
+  brakeButtons.forEach(function(elem) {
+      elem.addEventListener("click", function() {
+        console.log('toggle brake on for ' + elem.id);
+        helmet.toggleBrake(elem.id)
+      });
+  });
+
+  // HELMET CONTROLS
+  let socket = new Socket("ws://dlevs.me:4000/socket")
+
+  socket.connect()
+
+  // Now that you are connected, you can join channels with a topic:
+  let channel = socket.channel("room:lobby", {})
+
+  channel.join()
+    .receive("ok", resp => { console.log("Joined successfully", resp) })
+    .receive("error", resp => { console.log("Unable to join", resp) })
+
+  var helmet = new Helmet(channel);
+
+
+  // ACCELERATION DATA VISUALIZATION
+  var ws = new WebSocket("ws://localhost:8765");
+
+  ws.onopen = function () {
+    ws.send("This is the browser!");
+  };
+
+  ws.onmessage = function (e) {
+    let readings = JSON.parse(e.data);
+    addData(readings)
+    console.log(readings)
+  };
+
 };
 
-let socket = new Socket("ws://dlevs.me:4000/socket")
-
-socket.connect()
-
-// Now that you are connected, you can join channels with a topic:
-let channel = socket.channel("room:lobby", {})
-channel.join()
-  .receive("ok", resp => { console.log("Joined successfully", resp) })
-  .receive("error", resp => { console.log("Unable to join", resp) })
-
-// right or left state
-var state = {
-  'top': {
-    'speed': 300,
-    'stop': true,
-  },
-  'bottom': {
-    'speed': 300,
-    'stop': false,
-  }
-};
