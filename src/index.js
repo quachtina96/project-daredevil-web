@@ -215,9 +215,9 @@ window.onload = function() {
           if (parseFloat(elem.value)) {
             var newSpeed = helmet.setSpeed(elem.id, parseFloat(elem.value));
             elem.value = newSpeed;
-            console.log('set speed for' + elem.id);
+            console.log('set speed for ' + elem.id);
           } else {
-            console.log('could not speed for' + elem.id);
+            console.log('could not speed for ' + elem.id);
             elem.value = '0';
           }
           elem.blur()
@@ -251,6 +251,9 @@ window.onload = function() {
   });
 
   // HELMET CONTROLS
+
+  // Explaining the url
+  // ws:// denotes websocker
   let socket = new Socket("ws://dlevs.me:4000/socket")
 
   socket.connect()
@@ -259,10 +262,17 @@ window.onload = function() {
   let channel = socket.channel("room:lobby", {})
 
   channel.join()
-    .receive("ok", resp => { console.log("Joined successfully", resp) })
-    .receive("error", resp => { console.log("Unable to join", resp) })
+    .receive("ok", resp => { console.log("ok", resp) })
+    .receive("error", resp => { console.log("error on channel", resp) })
 
   var helmet = new Helmet(channel);
+
+  // In order to keep the connection alive, send current state to arbitrary side
+  // every 20 seconds.
+  setInterval(function() {
+     helmet.sendState('right');
+     console.log('heartbeat');
+   }, 20000);
 
 
   // ACCELERATION DATA VISUALIZATION

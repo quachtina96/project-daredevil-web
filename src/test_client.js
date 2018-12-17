@@ -6,18 +6,21 @@ socket.connect()
 
 // Now that you are connected, you can join channels with a topic:
 let channel = socket.channel("room:lobby", {})
+
 channel.join()
   .receive("ok", resp => { console.log("Joined successfully", resp) })
   .receive("error", resp => { console.log("Unable to join", resp) })
 
+// TODO: handle channel on error?
+
 // right or left state
 state = {
 	'top': {
-		'speed': 300,
+		'speed': 100,
 		'stop': true,
 	},
 	'bottom': {
-		'speed': 300,
+		'speed': 100,
 		'stop': false,
 	}
 };

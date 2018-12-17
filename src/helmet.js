@@ -49,7 +49,11 @@ class Helmet {
 	}
 
 	sendState(side) {
-		this.channel.push(side, {body: JSON.stringify(this.state.side)});
+		console.log('sending state')
+		console.log({body: JSON.stringify(this.state[side])});
+		console.log('for side')
+		console.log(side)
+		this.channel.push(side, {body: JSON.stringify(this.state[side])});
 	}
 
 	// Stop the entire helmet from moving
