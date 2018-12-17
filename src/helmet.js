@@ -1,16 +1,3 @@
-
-// right or left state
-state = {
-	'top': {
-		'speed': 300,
-		'stop': true,
-	},
-	'bottom': {
-		'speed': 300,
-		'stop': false,
-	}
-};
-
 /**
  * @fileoverview This file defines the helmet controller.
  */
@@ -25,20 +12,24 @@ class Helmet {
 				'top': {
 					'speed': 0,
 					'stop': false,
+					'direction':'clockwise'
 				},
 				'bottom': {
 					'speed': 0,
 					'stop': false,
+					'direction':'clockwise'
 				},
 			},
 			'right': {
 				'top': {
 					'speed': 0,
 					'stop': false,
+					'direction':'clockwise'
 				},
 				'bottom': {
 					'speed': 0,
 					'stop': false,
+					'direction':'clockwise'
 				}
 			}
 		}
@@ -54,13 +45,40 @@ class Helmet {
 	 */
 	update(side, state) {
 		this.state[side] = state;
-		channel.push(side, {body: JSON.stringify(state)})
+		this.sendState(side);
+	}
+
+	sendState(side) {
+		channel.push(side, {body: JSON.stringify(this.state.side)});
 	}
 
 	// Stop the entire helmet from moving
 	stop(side) {
 		this.state[side].top.speed = 0;
 		this.state[side].bottom.speed = 0;
-		channel.push(side, {body: JSON.stringify(state)})
+		this.sendState(side);
+	}
+
+	toggleDirection(id) {
+	    label = id.split('-');
+	    side = label[0];
+	    topbottom = label[1];
+	    currentDirection = this.state[side][topbottom].direction;
+	    if (currentDirection == "clockwise") {
+	    	this.state[side][topbottom] = "counterclockwise";
+	    } else {
+	    	this.state[side][topbottom] = "clockwise";
+	    }
+	    this.sendState(side);
+	}
+
+	toggleBrake(id) {
+	    label = id.split('-');
+	    side = label[0]
+	    topbottom = label[1];
+	    this.state[side][topbottom].stop = !this.state[side][topbottom].stop;
+	    this.sendState(side);
 	}
 }
+
+module.exports = Helmet
