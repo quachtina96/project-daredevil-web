@@ -277,7 +277,7 @@ window.onload = function() {
   setInterval(function() {
      helmet.sendState('right');
      console.log('heartbeat');
-   }, 20000);
+   }, 10000);
 
   var handleHelmetCommand = function(el) {
     // Set directions

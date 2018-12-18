@@ -48,12 +48,18 @@ class Helmet {
 		this.sendState(side);
 	}
 
+	_getSimpleStateString(side) {
+		var top = this.state[side].top;
+		var bottom = this.state[side].bottom;
+		return `${top.speed} ${top.direction} ${top.stop} ${bottom.speed} ${bottom.direction} ${bottom.stop}`
+	}
+
 	sendState(side) {
 		console.log('sending state')
-		console.log({body: JSON.stringify(this.state[side])});
+		console.log({body: this._getSimpleStateString(side)});
 		console.log('for side')
 		console.log(side)
-		this.channel.push(side, {body: JSON.stringify(this.state[side])});
+		this.channel.push(side, {body: this._getSimpleStateString(side)});
 	}
 
 	// Stop the entire helmet from moving

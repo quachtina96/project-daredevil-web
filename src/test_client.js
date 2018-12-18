@@ -25,5 +25,28 @@ state = {
 	}
 };
 
-channel.push("right", {body: JSON.stringify(state)})
+// right or left state
+string_state = {
+	'top': {
+		'direction':'clockwise'
+	},
+	'bottom': {
+		'direction':'counterclockwise'
+	}
+};
+
+// right or left state
+bool_state = {
+	'top': {
+		'speed': 100,
+		'stop': true,
+	},
+	'bottom': {
+		'speed': 100,
+		'stop': false,
+	}
+};
+
+// channel.push("right", {body: JSON.stringify(state)})
+channel.push("right", {body: JSON.stringify(string_state)});
 // channel.push("left", {body: JSON.stringify(state)})
